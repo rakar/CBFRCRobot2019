@@ -1,12 +1,12 @@
 package frc.robot.powerup.mappers;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.powerup.data.RequestData;
-
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.devices.CBButton;
 import org.montclairrobotics.cyborg.devices.CBDeviceID;
 import org.montclairrobotics.cyborg.mappers.CBTeleOpMapper;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.powerup.data.RequestData;
 
 public class OperatorMapper extends CBTeleOpMapper {
 
@@ -34,27 +34,27 @@ public class OperatorMapper extends CBTeleOpMapper {
         SmartDashboard.putBoolean("intakeLiftDownButton", requestData.intakeLiftDown);
     }
 
-    public OperatorMapper setShootCubeButton(CBDeviceID buttonID){
+    public OperatorMapper setShootCubeButton(CBDeviceID buttonID) {
         shootCubeButton = Cyborg.hardwareAdapter.getButton(buttonID);
         return this;
     }
 
-    public OperatorMapper setIntakeLiftUpButton(CBDeviceID buttonID){
+    public OperatorMapper setIntakeLiftUpButton(CBDeviceID buttonID) {
         intakeLiftUpButton = Cyborg.hardwareAdapter.getButton(buttonID);
         return this;
     }
 
-    public OperatorMapper setIntakeLiftDownButton(CBDeviceID buttonID){
+    public OperatorMapper setIntakeLiftDownButton(CBDeviceID buttonID) {
         intakeLiftDownButton = Cyborg.hardwareAdapter.getButton(buttonID);
         return this;
     }
 
-    public OperatorMapper setMainLiftUpButton(CBDeviceID buttonID){
+    public OperatorMapper setMainLiftUpButton(CBDeviceID buttonID) {
         mainLiftUpButton = Cyborg.hardwareAdapter.getButton(buttonID);
         return this;
     }
 
-    public OperatorMapper setMainLiftDownButton(CBDeviceID buttonID){
+    public OperatorMapper setMainLiftDownButton(CBDeviceID buttonID) {
         mainLiftDownButton = Cyborg.hardwareAdapter.getButton(buttonID);
         return this;
     }

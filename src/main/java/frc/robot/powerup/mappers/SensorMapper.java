@@ -1,16 +1,20 @@
 package frc.robot.powerup.mappers;
 
+import static org.montclairrobotics.cyborg.Cyborg.gameMode;
+
+import org.montclairrobotics.cyborg.CBGameMode;
+import org.montclairrobotics.cyborg.Cyborg;
+import org.montclairrobotics.cyborg.devices.CBDashboardChooser;
+import org.montclairrobotics.cyborg.devices.CBDigitalInput;
+import org.montclairrobotics.cyborg.devices.CBEncoder;
+import org.montclairrobotics.cyborg.devices.CBHardwareAdapter;
+import org.montclairrobotics.cyborg.devices.CBNavX;
+import org.montclairrobotics.cyborg.mappers.CBSensorMapper;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.powerup.RobotCB;
 import frc.robot.powerup.data.RequestData;
-
-import org.montclairrobotics.cyborg.CBGameMode;
-import org.montclairrobotics.cyborg.Cyborg;
-import org.montclairrobotics.cyborg.devices.*;
-import org.montclairrobotics.cyborg.mappers.CBSensorMapper;
-
-import static org.montclairrobotics.cyborg.Cyborg.gameMode;
 
 public class SensorMapper extends CBSensorMapper {
 

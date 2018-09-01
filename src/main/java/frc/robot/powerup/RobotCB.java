@@ -1,5 +1,6 @@
 package frc.robot.powerup;
 
+//#region imports
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import org.montclairrobotics.cyborg.Cyborg;
@@ -37,6 +38,7 @@ import frc.robot.powerup.data.ControlData;
 import frc.robot.powerup.data.RequestData;
 import frc.robot.powerup.mappers.OperatorMapper;
 import frc.robot.powerup.mappers.SensorMapper;
+//#endregion
 
 public class RobotCB extends Cyborg {
     // constants
@@ -60,6 +62,7 @@ public class RobotCB extends Cyborg {
     // attach to devices.
     //
     public static CBDeviceID
+    //#region Device List...
     pdb, navx,
 
     // driver controls
@@ -89,6 +92,7 @@ public class RobotCB extends Cyborg {
     // dashboard choosers
     fieldPosition, autoSelection
     ;
+    //#endregion
 
     public RobotCB() {
     }
