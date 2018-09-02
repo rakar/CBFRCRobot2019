@@ -26,8 +26,10 @@ public class RequestData extends CBRequestData {
     public String autoSelection;
     public char nearSwitchSide;
 
-
     // crazy second drivetrain for intake
     public CBStdDriveRequestData intake = new CBStdDriveRequestData();
 
+    public RequestData() {
+        driveData = new CBStdDriveRequestData();
+    }
 }
