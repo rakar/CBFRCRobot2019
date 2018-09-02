@@ -103,7 +103,6 @@ public class RobotCB extends Cyborg {
         // data init
         requestData = new RequestData();
         controlData = new ControlData();
-        controlData.driveData = new CBStdDriveControlData();
 
         defineDevices();
         defineMappers();
@@ -339,7 +338,7 @@ public class RobotCB extends Cyborg {
         );
 
         this.addTeleOpMapper(
-                new OperatorMapper(this);
+                new OperatorMapper(this)
         );
 
         // setup sensor mapper(s)
@@ -364,8 +363,7 @@ public class RobotCB extends Cyborg {
         this.addRobotController(
                 new CBDifferentialDriveController(this)
                         .addLeftDriveModule(
-                                new CBDriveModule(
-                                        new CB2DVector(-1, 0), 0)
+                                new CBDriveModule(new CB2DVector(-1, 0), 0)                                        
                                         .addSpeedControllerArray(
                                                 new CBVictorArrayController()
                                                         .setDriveMode(CBEnums.CBDriveMode.Power)
