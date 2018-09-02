@@ -25,8 +25,6 @@ public class AutoExample1 extends CBAutonomous {
     enum States {Start, ValidateLift, DriveAndLift, TurnLeft, TurnRight, DriveALittle, Eject, Done}
 
     private class StateMachine extends CBStateMachine<States> {
-        int cycleCheck = 0;
-
         StateMachine() {
             super(States.Start);
             setLoopMode(CBStateMachineLoopMode.Looping);
@@ -34,12 +32,9 @@ public class AutoExample1 extends CBAutonomous {
 
         @Override
         public void calcNextState() {
-            //SmartDashboard.putString("calc Next State:", currentState.name());
-            cycleCheck++;
-
             switch (currentState) {
                 case Start:
-                    nextState = States.ValidateLift;
+                nextState = States.ValidateLift;
                     break;
                 case ValidateLift:
                     if(rd.mainLiftLimitValue) {

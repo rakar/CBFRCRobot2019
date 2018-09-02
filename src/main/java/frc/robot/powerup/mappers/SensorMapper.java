@@ -1,8 +1,8 @@
 package frc.robot.powerup.mappers;
 
-import static org.montclairrobotics.cyborg.Cyborg.gameMode;
 
-import org.montclairrobotics.cyborg.CBGameMode;
+import org.montclairrobotics.cyborg.utils.CBGameMode;
+import org.montclairrobotics.cyborg.utils.CBTimingController;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.devices.CBDashboardChooser;
 import org.montclairrobotics.cyborg.devices.CBDigitalInput;
@@ -31,15 +31,19 @@ public class SensorMapper extends CBSensorMapper {
     @SuppressWarnings("unchecked")
     private CBDashboardChooser<String> autoSelection = (CBDashboardChooser<String>)ha.getDevice(RobotCB.autoSelection);
     private CBNavX navx = ha.getNavX(RobotCB.navx);
+    private CBTimingController currentMonitorTimer;
 
     public SensorMapper(Cyborg robot) {
         super(robot);
         this.robot = robot;
         rd = (RequestData)Cyborg.requestData;
+        currentMonitorTimer = new CBTimingController()
+            .setTiming(CBGameMode.anyPeriodic, 10);
     }
 
     @Override
     public void update() {
+        
         rd.mainLiftEncoderValue = mainLiftEncoder.getDistance();
         rd.mainLiftLimitValue = mainLiftLimit.get();
         rd.drivetrainLeftEncoderValue = drivetrainLeftEncoder.getDistance();
@@ -48,19 +52,21 @@ public class SensorMapper extends CBSensorMapper {
         rd.robotAngle = navx.getYaw();
 
         // FMS Data, Driver Station (Just to make things interesting lets try this pre-game only)
-        if ((gameMode & CBGameMode.preGame)!=0) {
+        if ((Cyborg.gameMode & CBGameMode.preGame)!=0) {
             rd.gameSpecificMessage = DriverStation.getInstance().getGameSpecificMessage();
             rd.fieldPosition = fieldPosition.getSelected();
             rd.autoSelection = autoSelection.getSelected();
             rd.nearSwitchSide = rd.gameSpecificMessage.charAt(0);
         }
 
-        SmartDashboard.putBoolean("mainLiftLimit", rd.mainLiftLimitValue);
-        SmartDashboard.putNumber("mainLiftEncoder", rd.mainLiftEncoderValue);
-        SmartDashboard.putNumber("intakeLiftEncoder", intakeLiftEncoder.getDistance());
-        SmartDashboard.putNumber("drivetrainLeftEncoder", rd.drivetrainLeftEncoderValue);
-        SmartDashboard.putNumber("drivetrainRightEncoder", rd.drivetrainRightEncoderValue);
-        SmartDashboard.putString("AutoSelectedEcho", rd.autoSelection);
-        SmartDashboard.putNumber("FieldPositionEcho", rd.fieldPosition);
+        if(currentMonitorTimer.update().getState()) {
+            SmartDashboard.putBoolean("mainLiftLimit", rd.mainLiftLimitValue);
+            SmartDashboard.putNumber("mainLiftEncoder", rd.mainLiftEncoderValue);
+            SmartDashboard.putNumber("intakeLiftEncoder", intakeLiftEncoder.getDistance());
+            SmartDashboard.putNumber("drivetrainLeftEncoder", rd.drivetrainLeftEncoderValue);
+            SmartDashboard.putNumber("drivetrainRightEncoder", rd.drivetrainRightEncoderValue);
+            SmartDashboard.putString("AutoSelectedEcho", rd.autoSelection);
+            SmartDashboard.putNumber("FieldPositionEcho", rd.fieldPosition);
+        }
     }
 }
