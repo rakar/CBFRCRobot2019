@@ -19,6 +19,11 @@ import org.montclairrobotics.cyborg.data.CBStdDriveRequestData;
 public class RequestData extends CBRequestData {
 
     /**
+     * Drivetrain
+     */
+    public CBStdDriveRequestData drivetrain = new CBStdDriveRequestData();
+
+    /**
      * These fields represent requests that would be
      * made of the robot by the operator.  
      */
@@ -49,6 +54,5 @@ public class RequestData extends CBRequestData {
     public char nearSwitchSide;
 
     public RequestData() {
-        driveData = new CBStdDriveRequestData();
     }
 }

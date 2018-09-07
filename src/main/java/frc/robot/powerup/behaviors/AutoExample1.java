@@ -18,7 +18,7 @@ public class AutoExample1 extends CBAutonomous {
     private final static int mainLiftDist = 1000; // this is a bad value!
     private CBTarget1D leftTarget = new CBTarget1D().setTarget(90,4);
     private CBTarget1D rightTarget = new CBTarget1D().setTarget(-90,4);
-    private CBStdDriveRequestData drd = (CBStdDriveRequestData)rd.driveData;
+    private CBStdDriveRequestData drd = (CBStdDriveRequestData)rd.drivetrain;
     private CBStdDriveRequestData intake = (CBStdDriveRequestData)rd.intake;
     private StateMachine stateMachine = new StateMachine();
 

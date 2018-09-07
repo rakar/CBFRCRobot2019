@@ -2,15 +2,12 @@ package frc.robot.powerup;
 
 //#region imports
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.assemblies.CBDriveModule;
 import org.montclairrobotics.cyborg.assemblies.CBVictorArrayController;
 import org.montclairrobotics.cyborg.behaviors.CBStdDriveBehavior;
 import org.montclairrobotics.cyborg.controllers.CBDifferentialDriveController;
 import org.montclairrobotics.cyborg.controllers.CBLiftController;
-import org.montclairrobotics.cyborg.data.CBStdDriveControlData;
-import org.montclairrobotics.cyborg.data.CBStdDriveRequestData;
 import org.montclairrobotics.cyborg.devices.CBAxis;
 import org.montclairrobotics.cyborg.devices.CBButton;
 import org.montclairrobotics.cyborg.devices.CBDashboardChooser;
@@ -27,7 +24,6 @@ import org.montclairrobotics.cyborg.mappers.CBMotorMonitorMapper;
 import org.montclairrobotics.cyborg.utils.CB2DVector;
 import org.montclairrobotics.cyborg.utils.CBEnums;
 import org.montclairrobotics.cyborg.utils.CBPIDErrorCorrection;
-
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.powerup.behaviors.AutoExample1;
@@ -312,7 +308,7 @@ public class RobotCB extends Cyborg {
     private void defineMappers() {
         // setup teleop mappers
         this.addTeleOpMapper(
-                new CBArcadeDriveMapper(this)
+                new CBArcadeDriveMapper(this,((RequestData) requestData).drivetrain)
                         .setAxes(driveYAxis, null, driveXAxis)
                         // TODO: the following line commented because the mode above was changed to Power (from speed)
                         // TODO: Tune Axis Scales
@@ -324,9 +320,9 @@ public class RobotCB extends Cyborg {
         // create a second "drivetrain" to operate the intake
         // because they work the same way...
         this.addTeleOpMapper(
-                new CBArcadeDriveMapper(this)
+                new CBArcadeDriveMapper(this, ((RequestData) requestData).intake)
                         .setAxes(operYAxis, null, operXAxis)
-                        .setRequestData(((RequestData) requestData).intake)
+                        //.setRequestData(((RequestData) requestData).intake)
         );
 
         this.addTeleOpMapper(
@@ -353,7 +349,7 @@ public class RobotCB extends Cyborg {
     private void defineControllers() {
         // setup robot controllers
         this.addRobotController(
-                new CBDifferentialDriveController(this)
+                new CBDifferentialDriveController(this, ((ControlData) controlData).drivetrain)
                         .addLeftDriveModule(
                                 new CBDriveModule(new CB2DVector(-1, 0), 0)                                        
                                         .addSpeedControllerArray(
@@ -388,7 +384,7 @@ public class RobotCB extends Cyborg {
 
         // yup again with the second drivetrain for the intake
         this.addRobotController(
-                new CBDifferentialDriveController(this)
+                new CBDifferentialDriveController(this, ((ControlData) controlData).intake)
                         .addLeftDriveModule(
                                 new CBDriveModule(new CB2DVector(-6, 0), 0)
                                         .addSpeedControllerArray(
@@ -405,7 +401,6 @@ public class RobotCB extends Cyborg {
                                                         .addSpeedController(intakeRightMotor)
                                         )
                         )
-                        .setControlData(((ControlData) controlData).intake)
         );
 
         // main lift controller definition
@@ -459,15 +454,19 @@ public class RobotCB extends Cyborg {
 
     private void defineBehaviors() {
         // setup behaviors
-        this.addBehavior(new CBStdDriveBehavior(this));
+        this.addBehavior(
+                new CBStdDriveBehavior(this, 
+                        ((RequestData) requestData).drivetrain, 
+                        ((ControlData) controlData).drivetrain)
+        );
         this.addBehavior(new MainLiftBehavior(this));
         this.addBehavior(new IntakeLiftBehavior(this));
 
         // while this looks like a drivetrain, its an intake.
         this.addBehavior(
-                new CBStdDriveBehavior(this)
-                        .setRequestData(((RequestData) requestData).intake)
-                        .setControlData(((ControlData) controlData).intake)
+                new CBStdDriveBehavior(this, 
+                        ((RequestData) requestData).intake, 
+                        ((ControlData) controlData).intake)
         );
 
         this.addBehavior(new OperatorBehavior(this));

@@ -20,6 +20,12 @@ import org.montclairrobotics.cyborg.data.CBStdDriveControlData;
 public class ControlData extends CBControlData {
 
     /**
+         * Initialize the driveData field with standard
+         * drive control data
+         */
+    public CBStdDriveControlData drivetrain = new CBStdDriveControlData();
+
+    /**
      * The CBLiftControlData class is pre-defined to provide
      * data for the CBLiftController class and as such is 
      * a drop-in which allows us to rapidly implement a variety 
@@ -40,11 +46,5 @@ public class ControlData extends CBControlData {
     public CBStdDriveControlData intake = new CBStdDriveControlData();
 
     public ControlData() {
-
-        /**
-         * Initialize the driveData field with a class that inherits 
-         * from CBDriveControlData. 
-         */
-        driveData = new CBStdDriveControlData();
     }
 }
