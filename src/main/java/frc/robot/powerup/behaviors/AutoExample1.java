@@ -99,6 +99,7 @@ public class AutoExample1 extends CBAutonomous {
                 case Start:
                     drd.active = true;
                     drd.direction = new CB2DVector(0,0);
+                    drd.rotation = 0;
                     intake.active=true;
                     intake.direction.setXY(0,-.20); // bad value - Draw cube in?
                     intake.rotation = 0;

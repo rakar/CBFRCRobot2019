@@ -18,9 +18,11 @@ import frc.robot.powerup.data.RequestData;
 
 public class SensorMapper extends CBSensorMapper {
 
-    private RequestData rd;
+    private RequestData rd = (RequestData)Cyborg.requestData;
 
-    CBHardwareAdapter ha = Cyborg.hardwareAdapter;
+    // create local copies of the devices one-time
+    // for use in update method
+    private CBHardwareAdapter ha = Cyborg.hardwareAdapter;
     private CBEncoder mainLiftEncoder= ha.getEncoder(RobotCB.mainLiftEncoder);
     private CBDigitalInput mainLiftLimit = ha.getDigitalInput(RobotCB.mainLiftLimit);
     private CBEncoder intakeLiftEncoder = ha.getEncoder(RobotCB.intakeLiftEncoder);
@@ -31,19 +33,17 @@ public class SensorMapper extends CBSensorMapper {
     @SuppressWarnings("unchecked")
     private CBDashboardChooser<String> autoSelection = (CBDashboardChooser<String>)ha.getDevice(RobotCB.autoSelection);
     private CBNavX navx = ha.getNavX(RobotCB.navx);
-    private CBTimingController currentMonitorTimer;
+    private CBTimingController dashboardTimer= new CBTimingController().setTiming(CBGameMode.anyPeriodic, 10);
 
     public SensorMapper(Cyborg robot) {
         super(robot);
-        this.robot = robot;
-        rd = (RequestData)Cyborg.requestData;
-        currentMonitorTimer = new CBTimingController()
-            .setTiming(CBGameMode.anyPeriodic, 10);
     }
 
     @Override
     public void update() {
         
+        // The main work is done here transferring values from 
+        // the devices to RequestData
         rd.mainLiftEncoderValue = mainLiftEncoder.getDistance();
         rd.mainLiftLimitValue = mainLiftLimit.get();
         rd.drivetrainLeftEncoderValue = drivetrainLeftEncoder.getDistance();
@@ -52,14 +52,14 @@ public class SensorMapper extends CBSensorMapper {
         rd.robotAngle = navx.getYaw();
 
         // FMS Data, Driver Station (Just to make things interesting lets try this pre-game only)
-        if ((Cyborg.gameMode & CBGameMode.preGame)!=0) {
+        if (Cyborg.isGameMode(CBGameMode.preGame)) {
             rd.gameSpecificMessage = DriverStation.getInstance().getGameSpecificMessage();
             rd.fieldPosition = fieldPosition.getSelected();
             rd.autoSelection = autoSelection.getSelected();
             rd.nearSwitchSide = rd.gameSpecificMessage.charAt(0);
         }
 
-        if(currentMonitorTimer.update().getState()) {
+        if(dashboardTimer.update().getState()) {
             SmartDashboard.putBoolean("mainLiftLimit", rd.mainLiftLimitValue);
             SmartDashboard.putNumber("mainLiftEncoder", rd.mainLiftEncoderValue);
             SmartDashboard.putNumber("intakeLiftEncoder", intakeLiftEncoder.getDistance());

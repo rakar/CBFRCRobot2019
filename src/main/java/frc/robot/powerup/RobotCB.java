@@ -46,14 +46,6 @@ public class RobotCB extends Cyborg {
     private final int driveStickID = 0;
     private final int operatorStickID = 1;
 
-    // this was made class level to allow for access
-    // from methods. hardwareAdapter is the main class
-    // object, so this will likely be put back in
-    // defineDevices, but may be a helpful shortcut
-    // ???
-    // oh just bite the bullet and do the right thing.
-    //CBHardwareAdapter ha;
-
     //
     // This has been changed to "public static" from "private" to allow
     // for direct access in cases of NON-reusable mappers/behaviors
@@ -480,5 +472,4 @@ public class RobotCB extends Cyborg {
 
         this.addBehavior(new OperatorBehavior(this));
     }
-
 }
