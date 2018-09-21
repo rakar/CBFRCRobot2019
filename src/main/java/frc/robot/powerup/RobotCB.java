@@ -411,22 +411,29 @@ public class RobotCB extends Cyborg {
                 // there are other "soft" configurations done in the mapper
                 // that include margins (which trigger slow motion)
                 // and in this case a encoder based top limit
-                new CBLiftController(this)
+                new CBLiftController(this, 
+                        controlData.mainLift, 
+                        new CBVictorArrayController()
+                                .addSpeedController(mainLiftMotorFront)
+                                .setDriveMode(CBEnums.CBDriveMode.Power)
+                        )
                         // setData allows you to pick a CBLinearControllerData variable
                         // in controlData to use for this lift. There might be several
                         // lift controllers and each one would be controlled by a different
                         // CBLinearControllerData object in controlData.
-                        .setData(controlData.mainLift)
+                        // Moved into constructor...
+                        //.setData(controlData.mainLift)
                         // set a lower limit switch this is a hard limit
                         .setBottomLimit(mainLiftLimit)
                         // set the encoder for the lift
                         .setEncoder(mainLiftEncoder)
                         // attach a speed controller array to drive the lift
-                        .setSpeedControllerArray(
-                                new CBVictorArrayController()
-                                        .addSpeedController(mainLiftMotorFront)
-                                        .setDriveMode(CBEnums.CBDriveMode.Power)
-                        )
+                        // Moved into constructor...
+                        //.setSpeedControllerArray(
+                        //        new CBVictorArrayController()
+                        //                .addSpeedController(mainLiftMotorFront)
+                        //                .setDriveMode(CBEnums.CBDriveMode.Power)
+                        //)
         );
 
         // intake lift controller definition
@@ -435,22 +442,27 @@ public class RobotCB extends Cyborg {
                 // there are other "soft" configurations done in the mapper
                 // that include margins (which trigger slow motion)
                 // and in this case an encoder based top limit
-                new CBLiftController(this)
+                new CBLiftController(this,
+                        controlData.intakeLift,
+                        new CBVictorArrayController()
+                                .addSpeedController(intakeLiftMotor)
+                                .setDriveMode(CBEnums.CBDriveMode.Power)
+                        )
                         // setData allows you to pick a CBLinearControllerData variable
                         // in controlData to use for this lift. There might be several
                         // lift controllers and each one would be controlled by a different
                         // CBLinearControllerData object in controlData.
-                        .setData(controlData.intakeLift)
+                        //.setData(controlData.intakeLift)
                         // set a lower limit switch this is a hard limit
                         //.setBottomLimit(mainLiftLimit)
                         // set the encoder for the lift
                         .setEncoder(intakeLiftEncoder)
                         // attach a speed controller array to drive the lift
-                        .setSpeedControllerArray(
-                                new CBVictorArrayController()
-                                        .addSpeedController(intakeLiftMotor)
-                                        .setDriveMode(CBEnums.CBDriveMode.Power)
-                        )
+                        //.setSpeedControllerArray(
+                        //        new CBVictorArrayController()
+                        //                .addSpeedController(intakeLiftMotor)
+                        //                .setDriveMode(CBEnums.CBDriveMode.Power)
+                        //)
         );
     }
 
