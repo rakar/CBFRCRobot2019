@@ -6,7 +6,7 @@ import org.montclairrobotics.cyborg.data.CBStdDriveRequestData;
 import org.montclairrobotics.cyborg.utils.CB2DVector;
 import org.montclairrobotics.cyborg.utils.CBStateMachine;
 import org.montclairrobotics.cyborg.utils.CBTarget1D;
-
+import frc.robot.powerup.RobotCB;
 import frc.robot.powerup.data.RequestData;
 
 
@@ -167,7 +167,7 @@ public class AutoExample1 extends CBAutonomous {
 
     public AutoExample1(Cyborg robot) {
         super(robot);
-        rd = ((RequestData)Cyborg.requestData);
+        rd = RobotCB.requestData; // ((RequestData)Cyborg.requestData);
     }
 
     @Override

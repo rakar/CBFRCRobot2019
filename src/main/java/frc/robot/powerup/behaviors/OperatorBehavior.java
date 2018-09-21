@@ -3,14 +3,14 @@ package frc.robot.powerup.behaviors;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.behaviors.CBBehavior;
 import org.montclairrobotics.cyborg.data.CBStdDriveControlData;
-
+import frc.robot.powerup.RobotCB;
 import frc.robot.powerup.data.ControlData;
 import frc.robot.powerup.data.RequestData;
 
 public class OperatorBehavior extends CBBehavior {
 
-    private RequestData rd = (RequestData) Cyborg.requestData;
-    private ControlData cd = (ControlData) Cyborg.controlData;
+    private RequestData rd = RobotCB.requestData; //(RequestData) Cyborg.requestData;
+    private ControlData cd = RobotCB.controlData; //(ControlData) Cyborg.controlData;
     private CBStdDriveControlData intake = cd.intake;
 
     public OperatorBehavior(Cyborg robot) {

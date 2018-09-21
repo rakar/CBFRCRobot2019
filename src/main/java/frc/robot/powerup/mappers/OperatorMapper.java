@@ -9,7 +9,7 @@ import frc.robot.powerup.data.RequestData;
 
 public class OperatorMapper extends CBTeleOpMapper {
 
-    private RequestData requestData = (RequestData) Cyborg.requestData;
+    private RequestData requestData = RobotCB.requestData; //(RequestData) Cyborg.requestData;
 
     private CBButton shootCubeButton;
     private CBButton intakeLiftUpButton;

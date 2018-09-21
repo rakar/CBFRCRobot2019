@@ -18,7 +18,7 @@ import frc.robot.powerup.data.RequestData;
 
 public class SensorMapper extends CBSensorMapper {
 
-    private RequestData rd = (RequestData)Cyborg.requestData;
+    private RequestData rd = RobotCB.requestData; //(RequestData)Cyborg.requestData;
 
     // create local copies of the devices one-time
     // for use in update method
