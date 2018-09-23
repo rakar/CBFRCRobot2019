@@ -49,8 +49,10 @@ public class RobotCB extends Cyborg {
     // anyway. Reusable code, should of course use setter functions to
     // attach to devices.
     //
-    public static CBDeviceID
+
     //#region Device List...
+    public static CBDeviceID 
+    // modules
     pdb, navx,
 
     // driver controls
@@ -82,8 +84,8 @@ public class RobotCB extends Cyborg {
     ;
     //#endregion
 
-        public static RequestData requestData;
-        public static ControlData controlData;
+    public static RequestData requestData;
+    public static ControlData controlData;
 
     public RobotCB() {
     }

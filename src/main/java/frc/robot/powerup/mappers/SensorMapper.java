@@ -1,20 +1,19 @@
 package frc.robot.powerup.mappers;
 
-
-import org.montclairrobotics.cyborg.utils.CBGameMode;
-import org.montclairrobotics.cyborg.utils.CBTimingController;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.devices.CBDashboardChooser;
 import org.montclairrobotics.cyborg.devices.CBDigitalInput;
 import org.montclairrobotics.cyborg.devices.CBEncoder;
-import org.montclairrobotics.cyborg.devices.CBHardwareAdapter;
 import org.montclairrobotics.cyborg.devices.CBNavX;
 import org.montclairrobotics.cyborg.mappers.CBSensorMapper;
-
+import org.montclairrobotics.cyborg.utils.CBGameMode;
+import org.montclairrobotics.cyborg.utils.CBTimingController;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.powerup.RobotCB;
 import frc.robot.powerup.data.RequestData;
+
+import static org.montclairrobotics.cyborg.Cyborg.hardwareAdapter;
 
 public class SensorMapper extends CBSensorMapper {
 
@@ -22,17 +21,16 @@ public class SensorMapper extends CBSensorMapper {
 
     // create local copies of the devices one-time
     // for use in update method
-    private CBHardwareAdapter ha = Cyborg.hardwareAdapter;
-    private CBEncoder mainLiftEncoder= ha.getEncoder(RobotCB.mainLiftEncoder);
-    private CBDigitalInput mainLiftLimit = ha.getDigitalInput(RobotCB.mainLiftLimit);
-    private CBEncoder intakeLiftEncoder = ha.getEncoder(RobotCB.intakeLiftEncoder);
-    private CBEncoder drivetrainLeftEncoder = ha.getEncoder(RobotCB.dtLeftEncoder);
-    private CBEncoder drivetrainRightEncoder = ha.getEncoder(RobotCB.dtRightEncoder);
+    private CBEncoder mainLiftEncoder = hardwareAdapter.getEncoder(RobotCB.mainLiftEncoder);
+    private CBDigitalInput mainLiftLimit = hardwareAdapter.getDigitalInput(RobotCB.mainLiftLimit);
+    private CBEncoder intakeLiftEncoder = hardwareAdapter.getEncoder(RobotCB.intakeLiftEncoder);
+    private CBEncoder drivetrainLeftEncoder = hardwareAdapter.getEncoder(RobotCB.dtLeftEncoder);
+    private CBEncoder drivetrainRightEncoder = hardwareAdapter.getEncoder(RobotCB.dtRightEncoder);
     @SuppressWarnings("unchecked")
-    private CBDashboardChooser<Character> fieldPosition = (CBDashboardChooser<Character>)ha.getDevice(RobotCB.fieldPosition);
+    private CBDashboardChooser<Character> fieldPosition = (CBDashboardChooser<Character>)hardwareAdapter.getDevice(RobotCB.fieldPosition);
     @SuppressWarnings("unchecked")
-    private CBDashboardChooser<String> autoSelection = (CBDashboardChooser<String>)ha.getDevice(RobotCB.autoSelection);
-    private CBNavX navx = ha.getNavX(RobotCB.navx);
+    private CBDashboardChooser<String> autoSelection = (CBDashboardChooser<String>)hardwareAdapter.getDevice(RobotCB.autoSelection);
+    private CBNavX navx = hardwareAdapter.getNavX(RobotCB.navx);
     private CBTimingController dashboardTimer= new CBTimingController().setTiming(CBGameMode.anyPeriodic, 10);
 
     public SensorMapper(Cyborg robot) {
