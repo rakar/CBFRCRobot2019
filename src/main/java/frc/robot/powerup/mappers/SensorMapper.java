@@ -1,23 +1,22 @@
 package frc.robot.powerup.mappers;
 
+import static org.montclairrobotics.cyborg.Cyborg.hardwareAdapter;
 import org.montclairrobotics.cyborg.Cyborg;
+import org.montclairrobotics.cyborg.core.mappers.CBSensorMapper;
+import org.montclairrobotics.cyborg.core.utils.CBGameMode;
+import org.montclairrobotics.cyborg.core.utils.CBTimingController;
 import org.montclairrobotics.cyborg.devices.CBDashboardChooser;
 import org.montclairrobotics.cyborg.devices.CBDigitalInput;
 import org.montclairrobotics.cyborg.devices.CBEncoder;
 import org.montclairrobotics.cyborg.devices.CBNavX;
-import org.montclairrobotics.cyborg.mappers.CBSensorMapper;
-import org.montclairrobotics.cyborg.utils.CBGameMode;
-import org.montclairrobotics.cyborg.utils.CBTimingController;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.powerup.RobotCB;
 import frc.robot.powerup.data.RequestData;
 
-import static org.montclairrobotics.cyborg.Cyborg.hardwareAdapter;
-
 public class SensorMapper extends CBSensorMapper {
 
-    private RequestData rd = RobotCB.requestData; //(RequestData)Cyborg.requestData;
+    private RequestData rd = RobotCB.requestData; // (RequestData)Cyborg.requestData;
 
     // create local copies of the devices one-time
     // for use in update method
@@ -35,6 +34,11 @@ public class SensorMapper extends CBSensorMapper {
 
     public SensorMapper(Cyborg robot) {
         super(robot);
+    }
+
+    @Override
+    public void init() {
+
     }
 
     @Override

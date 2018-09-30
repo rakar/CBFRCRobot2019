@@ -1,7 +1,7 @@
 package frc.robot.powerup.data;
 
-import org.montclairrobotics.cyborg.data.CBRequestData;
-import org.montclairrobotics.cyborg.data.CBStdDriveRequestData;
+import org.montclairrobotics.cyborg.core.data.CBRequestData;
+import org.montclairrobotics.cyborg.core.data.CBStdDriveRequestData;
 
 /**
  * This class holds the data used by the Behaviors to 

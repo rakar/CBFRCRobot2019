@@ -1,11 +1,12 @@
 package frc.robot.powerup.behaviors;
 
 import org.montclairrobotics.cyborg.Cyborg;
-import org.montclairrobotics.cyborg.behaviors.CBAutonomous;
-import org.montclairrobotics.cyborg.data.CBStdDriveRequestData;
-import org.montclairrobotics.cyborg.utils.CB2DVector;
-import org.montclairrobotics.cyborg.utils.CBStateMachine;
-import org.montclairrobotics.cyborg.utils.CBTarget1D;
+import org.montclairrobotics.cyborg.core.behaviors.CBAutonomous;
+import org.montclairrobotics.cyborg.core.data.CBStdDriveRequestData;
+import org.montclairrobotics.cyborg.core.utils.CB2DVector;
+import org.montclairrobotics.cyborg.core.utils.CBStateMachine;
+//import org.montclairrobotics.cyborg.core.utils.CBStateMachine.CBStateMachineLoopMode;
+import org.montclairrobotics.cyborg.core.utils.CBTarget1D;
 import frc.robot.powerup.RobotCB;
 import frc.robot.powerup.data.RequestData;
 

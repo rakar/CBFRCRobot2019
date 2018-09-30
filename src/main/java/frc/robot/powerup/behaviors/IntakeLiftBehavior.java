@@ -1,7 +1,7 @@
 package frc.robot.powerup.behaviors;
 
 import org.montclairrobotics.cyborg.Cyborg;
-import org.montclairrobotics.cyborg.behaviors.CBBehavior;
+import org.montclairrobotics.cyborg.core.behaviors.CBBehavior;
 import frc.robot.powerup.RobotCB;
 import frc.robot.powerup.data.ControlData;
 import frc.robot.powerup.data.RequestData;

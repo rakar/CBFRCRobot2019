@@ -1,17 +1,16 @@
 package frc.robot.powerup.mappers;
 
+import static org.montclairrobotics.cyborg.Cyborg.hardwareAdapter;
 import org.montclairrobotics.cyborg.Cyborg;
+import org.montclairrobotics.cyborg.core.mappers.CBTeleOpMapper;
 import org.montclairrobotics.cyborg.devices.CBButton;
-import org.montclairrobotics.cyborg.mappers.CBTeleOpMapper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.powerup.RobotCB;
 import frc.robot.powerup.data.RequestData;
 
-import static org.montclairrobotics.cyborg.Cyborg.hardwareAdapter;
-
 public class OperatorMapper extends CBTeleOpMapper {
 
-    private RequestData rd = RobotCB.requestData; //(RequestData) Cyborg.requestData;
+    private RequestData rd = RobotCB.requestData; // (RequestData) Cyborg.requestData;
 
     private CBButton shootCubeButton = hardwareAdapter.getButton(RobotCB.shootCubeButton);
     private CBButton intakeLiftUpButton = hardwareAdapter.getButton(RobotCB.intakeLiftUpButton);
@@ -21,6 +20,11 @@ public class OperatorMapper extends CBTeleOpMapper {
     
     public OperatorMapper(Cyborg robot) {
         super(robot);
+    }
+
+    @Override
+    public void init() {
+
     }
 
     @Override

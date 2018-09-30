@@ -1,8 +1,8 @@
 package frc.robot.powerup.data;
 
-import org.montclairrobotics.cyborg.data.CBControlData;
-import org.montclairrobotics.cyborg.data.CBLiftControlData;
-import org.montclairrobotics.cyborg.data.CBStdDriveControlData;
+import org.montclairrobotics.cyborg.core.data.CBControlData;
+import org.montclairrobotics.cyborg.core.data.CBLiftControlData;
+import org.montclairrobotics.cyborg.core.data.CBStdDriveControlData;
 
 /**
  * This class holds the data used by the Controllers to 
