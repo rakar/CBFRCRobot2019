@@ -4,10 +4,12 @@ package frc.robot.powerup;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.core.assemblies.CBDriveModule;
-import org.montclairrobotics.cyborg.core.assemblies.CBVictorArrayController;
+import org.montclairrobotics.cyborg.core.assemblies.CBSimpleArrayController;
 import org.montclairrobotics.cyborg.core.behaviors.CBStdDriveBehavior;
 import org.montclairrobotics.cyborg.core.controllers.CBDifferentialDriveController;
 import org.montclairrobotics.cyborg.core.controllers.CBLiftController;
+import org.montclairrobotics.cyborg.core.mappers.CBArcadeDriveMapper;
+import org.montclairrobotics.cyborg.core.mappers.CBMotorMonitorMapper;
 import org.montclairrobotics.cyborg.core.utils.CB2DVector;
 import org.montclairrobotics.cyborg.core.utils.CBEnums;
 import org.montclairrobotics.cyborg.core.utils.CBPIDErrorCorrection;
@@ -22,8 +24,6 @@ import org.montclairrobotics.cyborg.devices.CBNavX;
 import org.montclairrobotics.cyborg.devices.CBPDB;
 import org.montclairrobotics.cyborg.devices.CBSpeedControllerFaultCriteria;
 import org.montclairrobotics.cyborg.devices.CBTalonSRX;
-import org.montclairrobotics.cyborg.mappers.CBArcadeDriveMapper;
-import org.montclairrobotics.cyborg.mappers.CBMotorMonitorMapper;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.SPI;
 import frc.robot.powerup.behaviors.AutoExample1;
@@ -43,13 +43,12 @@ public class RobotCB extends Cyborg {
     private final int operatorStickID = 1;
 
     //
-    // This has been changed to "public static" from "private" to allow
+    // the devices have been changed to "public static" from "private" to allow
     // for direct access in cases of NON-reusable mappers/behaviors
-    // to avoid lengthy init code, that will always be robot specific
-    // anyway. Reusable code, should of course use setter functions to
+    // that will always be robot specific anyway in order to avoid lengthy init code. 
+    // Reusable code, should of course use setter functions to
     // attach to devices.
     //
-
     //#region Device List...
     public static CBDeviceID 
     // modules
@@ -357,7 +356,7 @@ public class RobotCB extends Cyborg {
                         .addLeftDriveModule(
                                 new CBDriveModule(new CB2DVector(-1, 0), 0)                                        
                                         .addSpeedControllerArray(
-                                                new CBVictorArrayController()
+                                                new CBSimpleArrayController()
                                                         .setDriveMode(CBEnums.CBDriveMode.Power)
                                                         .addSpeedController(dtFrontLeftMotor)
                                                         .addSpeedController(dtBackLeftMotor)
@@ -372,7 +371,7 @@ public class RobotCB extends Cyborg {
                         .addRightDriveModule(
                                 new CBDriveModule(new CB2DVector(1, 0), 180)
                                         .addSpeedControllerArray(
-                                                new CBVictorArrayController()
+                                                new CBSimpleArrayController()
                                                         .setDriveMode(CBEnums.CBDriveMode.Power)
                                                         .addSpeedController(dtFrontRightMotor)
                                                         .addSpeedController(dtBackRightMotor)
@@ -392,7 +391,7 @@ public class RobotCB extends Cyborg {
                         .addLeftDriveModule(
                                 new CBDriveModule(new CB2DVector(-6, 0), 0)
                                         .addSpeedControllerArray(
-                                                new CBVictorArrayController()
+                                                new CBSimpleArrayController()
                                                         .setDriveMode(CBEnums.CBDriveMode.Power)
                                                         .addSpeedController(intakeLeftMotor)
                                         )
@@ -400,7 +399,7 @@ public class RobotCB extends Cyborg {
                         .addRightDriveModule(
                                 new CBDriveModule(new CB2DVector(6, 0), -180)
                                         .addSpeedControllerArray(
-                                                new CBVictorArrayController()
+                                                new CBSimpleArrayController()
                                                         .setDriveMode(CBEnums.CBDriveMode.Power)
                                                         .addSpeedController(intakeRightMotor)
                                         )
@@ -415,7 +414,7 @@ public class RobotCB extends Cyborg {
                 // and in this case a encoder based top limit
                 new CBLiftController(this, 
                         controlData.mainLift, 
-                        new CBVictorArrayController()
+                        new CBSimpleArrayController()
                                 .addSpeedController(mainLiftMotorFront)
                                 .setDriveMode(CBEnums.CBDriveMode.Power)
                         )
@@ -446,7 +445,7 @@ public class RobotCB extends Cyborg {
                 // and in this case an encoder based top limit
                 new CBLiftController(this,
                         controlData.intakeLift,
-                        new CBVictorArrayController()
+                        new CBSimpleArrayController()
                                 .addSpeedController(intakeLiftMotor)
                                 .setDriveMode(CBEnums.CBDriveMode.Power)
                         )
