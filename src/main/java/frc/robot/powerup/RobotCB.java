@@ -4,7 +4,7 @@ package frc.robot.powerup;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import org.montclairrobotics.cyborg.Cyborg;
 import org.montclairrobotics.cyborg.core.assemblies.CBDriveModule;
-import org.montclairrobotics.cyborg.core.assemblies.CBSimpleArrayController;
+import org.montclairrobotics.cyborg.core.assemblies.CBSimpleSpeedControllerArray;
 import org.montclairrobotics.cyborg.core.behaviors.CBStdDriveBehavior;
 import org.montclairrobotics.cyborg.core.controllers.CBDifferentialDriveController;
 import org.montclairrobotics.cyborg.core.controllers.CBLiftController;
@@ -55,10 +55,10 @@ public class RobotCB extends Cyborg {
     pdb, navx,
 
     // driver controls
-    driveXAxis, driveYAxis, gyroLockButton,
+    driveRotAxis, driveFwdAxis, gyroLockButton,
 
     // operator controls
-    operXAxis, operYAxis, shootCubeButton, intakeLiftUpButton, intakeLiftDownButton, mainLiftUpButton, mainLiftDownButton,
+    operRotAxis, operFwdAxis, shootCubeButton, intakeLiftUpButton, intakeLiftDownButton, mainLiftUpButton, mainLiftDownButton,
 
     // drivetrain Motors
     dtFrontLeftMotor, dtFrontRightMotor, dtBackLeftMotor, dtBackRightMotor,
@@ -109,7 +109,7 @@ public class RobotCB extends Cyborg {
 
     @Override
     public void cyborgAutonomousInit() {
-        switch(((RequestData)requestData).autoSelection) {
+        switch(requestData.autoSelection) {
             case "auto1":
                 this.addAutonomous(new AutoExample1(this));
                 break;
@@ -251,31 +251,35 @@ public class RobotCB extends Cyborg {
         );
 
         // driver controls
-        driveXAxis = hardwareAdapter.add(
+        driveRotAxis = hardwareAdapter.add(
                 new CBAxis(driveStickID, 1)
                         .setDeadzone(0.1)
-                        .setScale(-1.0)
+                        //this is the new default scale of rotation for CBArcadeDriveMapper
+                        //.setScale(-1.0)  
         );
-        driveYAxis = hardwareAdapter.add(
+        driveFwdAxis = hardwareAdapter.add(
                 new CBAxis(driveStickID, 0)
                         .setDeadzone(0.1)
-                        .setScale(-1.0)
+                        //this is the new default scale of fwd for CBArcadeDriveMapper
+                        //.setScale(-1.0)
         );
         gyroLockButton = hardwareAdapter.add(
                 new CBButton(driveStickID, 1)
         );
 
         // operator controls
-        operXAxis = hardwareAdapter.add(
+        operRotAxis = hardwareAdapter.add(
                 new CBAxis(operatorStickID, 1)
                         .setDeadzone(0.1)
-                        .setScale(-1.0)
+                        //this is the new default scale of rotation for CBArcadeDriveMapper
+                        //.setScale(-1.0)
         );
 
-        operYAxis = hardwareAdapter.add(
+        operFwdAxis = hardwareAdapter.add(
                 new CBAxis(operatorStickID, 0)
                         .setDeadzone(0.1)
-                        .setScale(-1.0)
+                        //this is the new default scale of fwd for CBArcadeDriveMapper
+                        //.setScale(-1.0)
         );
 
         shootCubeButton = hardwareAdapter.add(
@@ -313,10 +317,7 @@ public class RobotCB extends Cyborg {
         // setup teleop mappers
         this.addTeleOpMapper(
                 new CBArcadeDriveMapper(this, requestData.drivetrain)
-                        .setAxes(driveYAxis, null, driveXAxis)
-                        // TODO: the following line commented because the mode above was changed to Power (from speed)
-                        // TODO: Tune Axis Scales
-                        //.setAxisScales(0, 40, 90) // no strafe, 40 inches/second, 90 degrees/second
+                        .setAxes(driveFwdAxis, null, driveRotAxis)
                         .setGyroLockButton(gyroLockButton)
         );
 
@@ -325,7 +326,7 @@ public class RobotCB extends Cyborg {
         // because they work the same way...
         this.addTeleOpMapper(
                 new CBArcadeDriveMapper(this, requestData.intake)
-                        .setAxes(operYAxis, null, operXAxis)
+                        .setAxes(operFwdAxis, null, operRotAxis)
         );
 
         this.addTeleOpMapper(
@@ -356,7 +357,7 @@ public class RobotCB extends Cyborg {
                         .addLeftDriveModule(
                                 new CBDriveModule(new CB2DVector(-1, 0), 0)                                        
                                         .addSpeedControllerArray(
-                                                new CBSimpleArrayController()
+                                                new CBSimpleSpeedControllerArray()
                                                         .setDriveMode(CBEnums.CBDriveMode.Power)
                                                         .addSpeedController(dtFrontLeftMotor)
                                                         .addSpeedController(dtBackLeftMotor)
@@ -371,7 +372,7 @@ public class RobotCB extends Cyborg {
                         .addRightDriveModule(
                                 new CBDriveModule(new CB2DVector(1, 0), 180)
                                         .addSpeedControllerArray(
-                                                new CBSimpleArrayController()
+                                                new CBSimpleSpeedControllerArray()
                                                         .setDriveMode(CBEnums.CBDriveMode.Power)
                                                         .addSpeedController(dtFrontRightMotor)
                                                         .addSpeedController(dtBackRightMotor)
@@ -391,7 +392,7 @@ public class RobotCB extends Cyborg {
                         .addLeftDriveModule(
                                 new CBDriveModule(new CB2DVector(-6, 0), 0)
                                         .addSpeedControllerArray(
-                                                new CBSimpleArrayController()
+                                                new CBSimpleSpeedControllerArray()
                                                         .setDriveMode(CBEnums.CBDriveMode.Power)
                                                         .addSpeedController(intakeLeftMotor)
                                         )
@@ -399,7 +400,7 @@ public class RobotCB extends Cyborg {
                         .addRightDriveModule(
                                 new CBDriveModule(new CB2DVector(6, 0), -180)
                                         .addSpeedControllerArray(
-                                                new CBSimpleArrayController()
+                                                new CBSimpleSpeedControllerArray()
                                                         .setDriveMode(CBEnums.CBDriveMode.Power)
                                                         .addSpeedController(intakeRightMotor)
                                         )
@@ -414,27 +415,14 @@ public class RobotCB extends Cyborg {
                 // and in this case a encoder based top limit
                 new CBLiftController(this, 
                         controlData.mainLift, 
-                        new CBSimpleArrayController()
+                        new CBSimpleSpeedControllerArray()
                                 .addSpeedController(mainLiftMotorFront)
                                 .setDriveMode(CBEnums.CBDriveMode.Power)
                         )
-                        // setData allows you to pick a CBLinearControllerData variable
-                        // in controlData to use for this lift. There might be several
-                        // lift controllers and each one would be controlled by a different
-                        // CBLinearControllerData object in controlData.
-                        // Moved into constructor...
-                        //.setData(controlData.mainLift)
-                        // set a lower limit switch this is a hard limit
+                        // set a lower limit switch. this is a hard limit
                         .setBottomLimit(mainLiftLimit)
                         // set the encoder for the lift
                         .setEncoder(mainLiftEncoder)
-                        // attach a speed controller array to drive the lift
-                        // Moved into constructor...
-                        //.setSpeedControllerArray(
-                        //        new CBVictorArrayController()
-                        //                .addSpeedController(mainLiftMotorFront)
-                        //                .setDriveMode(CBEnums.CBDriveMode.Power)
-                        //)
         );
 
         // intake lift controller definition
@@ -445,25 +433,14 @@ public class RobotCB extends Cyborg {
                 // and in this case an encoder based top limit
                 new CBLiftController(this,
                         controlData.intakeLift,
-                        new CBSimpleArrayController()
+                        new CBSimpleSpeedControllerArray()
                                 .addSpeedController(intakeLiftMotor)
                                 .setDriveMode(CBEnums.CBDriveMode.Power)
                         )
-                        // setData allows you to pick a CBLinearControllerData variable
-                        // in controlData to use for this lift. There might be several
-                        // lift controllers and each one would be controlled by a different
-                        // CBLinearControllerData object in controlData.
-                        //.setData(controlData.intakeLift)
                         // set a lower limit switch this is a hard limit
                         //.setBottomLimit(mainLiftLimit)
                         // set the encoder for the lift
                         .setEncoder(intakeLiftEncoder)
-                        // attach a speed controller array to drive the lift
-                        //.setSpeedControllerArray(
-                        //        new CBVictorArrayController()
-                        //                .addSpeedController(intakeLiftMotor)
-                        //                .setDriveMode(CBEnums.CBDriveMode.Power)
-                        //)
         );
     }
 
