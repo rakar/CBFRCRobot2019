@@ -5,16 +5,11 @@ import org.montclairrobotics.cyborg.core.data.CBStdDriveRequestData;
 
 /**
  * This class holds the data used by the Behaviors to 
- * decide what the robot should do. It is the interface 
- * between the Hardware and Logic Layers. 
+ * decide what the robot should do. It is the inbound
+ * interface between the Hardware and Logic Layers. 
+ *
  * Define and initialize all of the fields required to
  * pass information to the Behaviors.
- * 
- * The driveData field is inherited from CBRequestData
- * so it only needs to be initialized here. This is done
- * to ease the creation of standard drivetrain mappers 
- * and behaviors that can rely on the existance of 
- * this field. 
  */
 public class RequestData extends CBRequestData {
 

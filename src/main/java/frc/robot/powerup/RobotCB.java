@@ -410,7 +410,7 @@ public class RobotCB extends Cyborg {
         // main lift controller definition
         this.addRobotController(
                 // hardware configurations are done here.
-                // there are other "soft" configurations done in the mapper
+                // there are other "soft" configurations done in the behavior
                 // that include margins (which trigger slow motion)
                 // and in this case a encoder based top limit
                 new CBLiftController(this, 
@@ -428,7 +428,7 @@ public class RobotCB extends Cyborg {
         // intake lift controller definition
         this.addRobotController(
                 // hardware configurations are done here.
-                // there are other "soft" configurations done in the mapper
+                // there are other "soft" configurations done in the behavior
                 // that include margins (which trigger slow motion)
                 // and in this case an encoder based top limit
                 new CBLiftController(this,

@@ -10,19 +10,13 @@ import org.montclairrobotics.cyborg.core.data.CBStdDriveControlData;
  * between the Logic and Hardware Layers. 
  * Define and initialize all of the fields required to
  * pass information to the controllers.
- * 
- * The driveData field is inherited from CBControlData
- * so it only needs to be initialized here. This is done
- * to ease the creation of standard drivetrain behaviors 
- * and controllers that can rely on the existance of 
- * this field. 
  */
 public class ControlData extends CBControlData {
 
     /**
-         * Initialize the driveData field with standard
-         * drive control data
-         */
+     * Initialize the driveData field with standard
+     * drive control data
+     */
     public CBStdDriveControlData drivetrain = new CBStdDriveControlData();
 
     /**
